@@ -1,0 +1,16 @@
+#### Plot 4
+df=read.table("household_power_consumption.txt",na.strings="?",sep=";",header=T)
+df$Date=as.Date(df$Date, format="%d/%m/%Y")
+df=df[which(df$Date == as.Date("01/02/2007","%d/%m/%Y") | df$Date == as.Date("02/02/2007","%d/%m/%Y")),]
+df$time2=paste(df[,1],df[,2])
+df$time3=strptime(df$time2, format="%Y-%m-%d %H:%M:%S")
+png(filename="plot4.png")
+par(mfrow=c(2,2))
+plot(df$time3, df[,3],xlab="",ylab="Global Active Power (kilowatts)",type="l")
+with(df,plot(time3,Voltage,xlab="datetime",type="l"))
+plot(df$time3,df[,7],ylab="Energy sub metering", xlab="",type="l")
+lines(df$time3,df[,8],col="red",type="l")
+lines(df$time3,df[,9],col="blue",type="l")
+legend("topright", xxx,lty=1,col=c("black","red","blue"),text.font=2)
+with(df,plot(time3,Global_reactive_power,xlab="datetime",type="l"))
+dev.off()

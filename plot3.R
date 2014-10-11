@@ -1,0 +1,11 @@
+df=read.table("household_power_consumption.txt",na.strings="?",sep=";",header=T)
+df$Date=as.Date(df$Date, format="%d/%m/%Y")
+df=df[which(df$Date == as.Date("01/02/2007","%d/%m/%Y") | df$Date == as.Date("02/02/2007","%d/%m/%Y")),]
+df$time2=paste(df[,1],df[,2])
+df$time3=strptime(df$time2, format="%Y-%m-%d %H:%M:%S")
+png(filename="plot3.png")
+plot(df$time3,df[,7],ylab="Energy sub metering", xlab="",type="l")
+lines(df$time3,df[,8],col="red",type="l")
+lines(df$time3,df[,9],col="blue",type="l")
+legend("topright", xxx,lty=1,col=c("black","red","blue"),text.font=2)
+dev.off()
